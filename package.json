@@ -1,8 +1,8 @@
 {
   "name": "cobertura-parse",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Parse cobertura coverage to JSON, based on output from lcov-parse",
-  "main": "index.js",
+  "main": "source/index.js",
   "scripts": {
     "test": "mocha --reporter spec",
     "testcover": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec"
