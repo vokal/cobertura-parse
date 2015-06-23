@@ -13,5 +13,6 @@ var cob = require( "cobertura-parse" );
 cob.parseFile( "filepath.xml", function( err, result ) { ... } );
 
 // or parse file contents
-cob.parseContent( "<?xml version="1.0" ?><coverage>...</coverage>", function( err, result ) { ... } );
+cob.parseContent( "<?xml version="1.0" ?><coverage>...</coverage>",
+    function( err, result ) { ... } );
 ```
