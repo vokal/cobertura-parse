@@ -75,6 +75,11 @@ parse.parseContent = function ( xml, cb )
 {
     parseString( xml, function ( err, parseResult )
     {
+        if( err )
+        {
+            return cb( err );
+        }
+
         var result = unpackage( parseResult.coverage.packages );
 
         cb( err, result );
