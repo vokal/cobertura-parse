@@ -33,9 +33,9 @@ var unpackage = function ( packages )
             title: c.$.name,
             file: c.$.filename,
             functions: {
-                found: c.methods[ 0 ].method ? c.methods[ 0 ].method.length : 0,
+                found: c.methods && c.methods[ 0 ].method ? c.methods[ 0 ].method.length : 0,
                 hit: 0,
-                details: !c.methods[ 0 ].method ? [] : c.methods[ 0 ].method.map( function ( m )
+                details: !c.methods || !c.methods[ 0 ].method ? [] : c.methods[ 0 ].method.map( function ( m )
                 {
                     return {
                         name: m.$.name,
@@ -45,9 +45,9 @@ var unpackage = function ( packages )
                 } )
             },
             lines: {
-                found: c.lines[ 0 ].line ? c.lines[ 0 ].line.length : 0,
+                found: c.lines && c.lines[ 0 ].line ? c.lines[ 0 ].line.length : 0,
                 hit: 0,
-                details: !c.lines[ 0 ].line ? [] : c.lines[ 0 ].line.map( function ( l )
+                details: !c.lines || !c.lines[ 0 ].line ? [] : c.lines[ 0 ].line.map( function ( l )
                 {
                     return {
                         line: Number( l.$.number ),

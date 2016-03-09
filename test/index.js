@@ -24,4 +24,20 @@ describe( "parseFile", function ()
             done();
         } );
     } );
+
+    it( "should parse a sparse file", function ( done )
+    {
+        parse.parseFile( path.join( __dirname, "assets", "sample2.xml" ), function ( err, result )
+        {
+            assert.equal( err, null );
+            assert.equal( result.length, 2 );
+            assert.equal( result[ 0 ].functions.found, 0 );
+            assert.equal( result[ 0 ].functions.hit, 0 );
+            assert.equal( result[ 0 ].lines.found, 2 );
+            assert.equal( result[ 0 ].lines.hit, 0 );
+            assert.equal( result[ 0 ].functions.details.length, 0 );
+            assert.equal( result[ 0 ].lines.details.length, 2 );
+            done();
+        } );
+    } );
 } );
