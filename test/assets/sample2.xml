@@ -2,7 +2,7 @@
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
 <coverage>
   <sources>
-    <source>/Users/bboland/src/vokal/Brandish-iOS</source>
+    <source>ios</source>
   </sources>
   <packages>
     <package name="Headers">
