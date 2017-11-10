@@ -39,8 +39,8 @@ var unpackage = function ( packages )
                 {
                     return {
                         name: m.$.name,
-                        line: Number( m.lines[ 0 ].line[ 0 ].$.number ),
-                        hit: Number( m.lines[ 0 ].line[ 0 ].$.hits )
+                        line: m.lines && m.lines[ 0 ] && m.lines[ 0 ].line ? Number( m.lines[ 0 ].line[ 0 ].$.number ):0,
+                        hit: m.lines && m.lines[ 0 ] && m.lines[ 0 ].line ? Number( m.lines[ 0 ].line[ 0 ].$.hits ):0
                     };
                 } )
             },
