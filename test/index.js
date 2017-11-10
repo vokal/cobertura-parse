@@ -40,4 +40,20 @@ describe( "parseFile", function ()
             done();
         } );
     } );
+    it( "should parse a file without complete functions details", function ( done )
+    {
+        parse.parseFile( path.join( __dirname, "assets", "sample3.xml" ), function ( err, result )
+        {
+            console.log('result -->', err, JSON.stringify(result[0]));
+            assert.equal( err, null );
+            assert.equal( result.length, 14);
+            assert.equal( result[ 0 ].functions.found, 10 );
+            assert.equal( result[ 0 ].functions.hit, 9 );
+            assert.equal( result[ 0 ].lines.found, 96 );
+            assert.equal( result[ 0 ].lines.hit, 86 );
+            assert.equal( result[ 0 ].functions.details.length, 10 );
+            assert.equal( result[ 0 ].lines.details.length, 96 );
+            done();
+        } );
+    } );
 } );
