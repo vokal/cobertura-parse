@@ -23,12 +23,54 @@ var classesFromPackages = function ( packages )
     return classes;
 };
 
+var extractLcovStyleBranches = function ( c ) {
+    var branches = [];
+
+    if ( c.lines && c.lines[0].line )
+    {
+        c.lines[0].line.forEach( function ( l )
+        {
+            if ( l.$.branch == 'true' )
+            {
+                var branchStats = l.$['condition-coverage'].match( /\d+/g );
+                var coveredBranches = Number( branchStats[1] );
+                var totalBranches = Number( branchStats[2] );
+                var leftBranches = totalBranches - coveredBranches;
+
+                var branchNumber = 0;
+
+                for ( let i = 0; i < leftBranches; i++ )
+                {
+                    branches.push( {
+                        line: Number( l.$.number ),
+                        branch: branchNumber,
+                        taken: 0
+                    } );
+                    branchNumber++;
+                }
+
+                for ( let i = 0; i < coveredBranches; i++ )
+                {
+                    branches.push( {
+                        line: Number( l.$.number ),
+                        branch: branchNumber,
+                        taken: 1
+                    } );
+                    branchNumber++;
+                }
+            }
+        });
+    }
+
+    return branches;
+}
+
 var unpackage = function ( packages )
 {
     var classes = classesFromPackages( packages );
-
     return classes.map( function ( c )
     {
+        var branches = extractLcovStyleBranches( c );
         var classCov = {
             title: c.$.name,
             file: c.$.filename,
@@ -54,6 +96,11 @@ var unpackage = function ( packages )
                         hit: Number( l.$.hits )
                     };
                 } )
+            },
+            branches: {
+                found: branches.length,
+                hit: branches.filter( function ( br ) { return br.taken > 0; } ).length,
+                details: branches
             }
         };
 

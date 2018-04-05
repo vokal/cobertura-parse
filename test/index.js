@@ -40,4 +40,31 @@ describe( "parseFile", function ()
             done();
         } );
     } );
+
+    it( "should extract branch coverage", function ( done )
+    {
+        parse.parseFile( path.join( __dirname, "assets", "sample.xml" ), function ( err, result )
+        {
+            assert.equal( err, null );
+            assert.equal( result[ 0 ].branches.found, 6 );
+            assert.equal( result[ 0 ].branches.hit, 3 );
+            assert.equal( result[ 0 ].branches.details[ 0 ].taken, 0 );
+            assert.equal( result[ 0 ].branches.details[ 1 ].taken, 1 );
+            assert.equal( result[ 0 ].branches.details[ 2 ].taken, 0 );
+            assert.equal( result[ 0 ].branches.details[ 3 ].taken, 1 );
+            assert.equal( result[ 0 ].branches.details[ 4 ].taken, 0 );
+            assert.equal( result[ 0 ].branches.details[ 5 ].taken, 1 );
+
+            assert.equal( result[ 2 ].branches.found, 6 );
+            assert.equal( result[ 2 ].branches.hit, 5 );
+            assert.equal( result[ 2 ].branches.details[ 0 ].taken, 0 );
+            assert.equal( result[ 2 ].branches.details[ 1 ].taken, 1 );
+            assert.equal( result[ 2 ].branches.details[ 2 ].taken, 1 );
+            assert.equal( result[ 2 ].branches.details[ 3 ].taken, 1 );
+            assert.equal( result[ 2 ].branches.details[ 4 ].taken, 1 );
+            assert.equal( result[ 2 ].branches.details[ 5 ].taken, 1 );
+            done();
+        } );
+    } );
+
 } );
