@@ -67,4 +67,24 @@ describe( "parseFile", function ()
         } );
     } );
 
+    it( "should generate absolute path by default", function ( done )
+    {
+        parse.parseFile( path.join( __dirname, "assets", "sample3.xml" ), function ( err, result )
+        {
+            assert.equal( err, null );
+            assert.equal( result[ 0 ].file, path.join( '/Users/user/dev/project/src', '__init__.py') );
+            done();
+        } );
+    } );
+
+    it( "should keep relative path", function ( done )
+    {
+        parse.parseFile( path.join( __dirname, "assets", "sample3.xml" ), function ( err, result )
+        {
+            assert.equal( err, null );
+            assert.equal( result[ 0 ].file, '__init__.py' );
+            done();
+        }, false );
+    } );
+
 } );

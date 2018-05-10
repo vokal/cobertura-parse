@@ -15,4 +15,7 @@ cob.parseFile( "filepath.xml", function( err, result ) { ... } );
 // or parse file contents
 cob.parseContent( "<?xml version="1.0" ?><coverage>...</coverage>",
     function( err, result ) { ... } );
+
+// parse by file path (and keep relative paths)
+cob.parseFile( "filepath.xml", function( err, result ) { ... }, false );
 ```
