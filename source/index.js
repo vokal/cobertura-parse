@@ -1,6 +1,7 @@
 "use strict";
 
 var fs = require( "fs" );
+var path = require('path');
 var parseString = require( "xml2js" ).parseString;
 
 var parse = {};
@@ -65,15 +66,18 @@ var extractLcovStyleBranches = function ( c ) {
     return branches;
 }
 
-var unpackage = function ( packages )
+var unpackage = function ( coverage, absPath )
 {
+    var packages = coverage.packages;
+    var source = coverage.sources[ 0 ].source[ 0 ];
+
     var classes = classesFromPackages( packages );
     return classes.map( function ( c )
     {
         var branches = extractLcovStyleBranches( c );
         var classCov = {
             title: c.$.name,
-            file: c.$.filename,
+            file: absPath ? path.join( source, c.$.filename ) : c.$.filename,
             functions: {
                 found: c.methods && c.methods[ 0 ].method ? c.methods[ 0 ].method.length : 0,
                 hit: 0,
@@ -118,7 +122,7 @@ var unpackage = function ( packages )
     } );
 };
 
-parse.parseContent = function ( xml, cb )
+parse.parseContent = function ( xml, cb, absPath )
 {
     parseString( xml, function ( err, parseResult )
     {
@@ -127,14 +131,16 @@ parse.parseContent = function ( xml, cb )
             return cb( err );
         }
 
-        var result = unpackage( parseResult.coverage.packages );
+        var result = unpackage( parseResult.coverage, absPath );
 
         cb( err, result );
     } );
 };
 
-parse.parseFile = function( file, cb )
+parse.parseFile = function( file, cb, absPath )
 {
+    absPath = absPath === undefined ? true : absPath;
+
     fs.readFile( file, "utf8", function ( err, content )
     {
         if( err )
@@ -142,7 +148,7 @@ parse.parseFile = function( file, cb )
             return cb( err );
         }
 
-        parse.parseContent( content, cb );
+        parse.parseContent( content, cb, absPath );
     } );
 };
 
